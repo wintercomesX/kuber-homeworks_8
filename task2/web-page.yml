@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-page
+data:
+  index.html: |
+    <html>
+    <head><title>Мое HTTPS приложение</title></head>
+    <body>
+      <h1>Добро пожаловать по HTTPS!</h1>
+    </body>
+    </html>
