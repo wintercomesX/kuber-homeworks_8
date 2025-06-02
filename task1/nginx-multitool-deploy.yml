@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-multitool-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-multitool
+  template:
+    metadata:
+      labels:
+        app: nginx-multitool
+    spec:
+      volumes:
+        - name: web-content
+          configMap:
+            name: nginx-config
+        - name: nginx-conf
+          configMap:
+            name: nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: web-content
+              mountPath: /usr/share/nginx/html
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+        - name: multitool
+          image: busybox
+          command: ["/bin/sleep", "infinity"]
