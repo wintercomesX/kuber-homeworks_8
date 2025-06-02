@@ -13,7 +13,8 @@
 
 ![k8s](https://github.com/wintercomesX/kuber-homeworks_8/blob/main/kube8.2.PNG)
 
-### CURL
+CURL и современные браузеры не работают с самоподписными сертификатами, только с сертификатами от доверенных УЦ.
+Однако мы можем увидеть, что сервис по HTTPS работает и резолвится в корректный адрес.
 
 ![k8s](https://github.com/wintercomesX/kuber-homeworks_8/blob/main/kube8.3.PNG)
 
