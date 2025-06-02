@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-https-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-https
+  template:
+    metadata:
+      labels:
+        app: nginx-https
+    spec:
+      volumes:
+        - name: web-content
+          configMap:
+            name: web-page
+        - name: tls-secret
+          secret:
+            secretName: tls-secret
+        - name: nginx-conf
+          configMap:
+            name: nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - name: web-content
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+            - name: tls-secret
+              mountPath: /etc/ssl/certs
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
